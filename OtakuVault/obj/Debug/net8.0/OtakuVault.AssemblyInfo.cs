@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("OtakuVault")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+03913dc24b17d88708d057cdc83e2fb51f6d5457")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+cad85f9be5789ad596a6e148d167a2baa27dfa01")]
 [assembly: System.Reflection.AssemblyProductAttribute("OtakuVault")]
 [assembly: System.Reflection.AssemblyTitleAttribute("OtakuVault")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

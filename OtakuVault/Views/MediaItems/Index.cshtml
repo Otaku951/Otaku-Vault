@@ -1,4 +1,4 @@
-﻿@model IEnumerable<OtakuVault.Models.Movie>
+﻿@model IEnumerable<OtakuVault.Models.MediaItem>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,13 +16,16 @@
                 @Html.DisplayNameFor(model => model.Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.ReleaseDate)
+                @Html.DisplayNameFor(model => model.Type)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Genre)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Price)
+                @Html.DisplayNameFor(model => model.ImageData)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.ExternalLink)
             </th>
             <th></th>
         </tr>
@@ -34,18 +37,21 @@
                 @Html.DisplayFor(modelItem => item.Title)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ReleaseDate)
+                @Html.DisplayFor(modelItem => item.Type)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Genre)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Price)
+                @(item.ImageData != null && item.ImageData.Length > 0 ? "Yes" : "No")
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.ExternalLink)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.MediaID">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.MediaID">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.MediaID">Delete</a>
             </td>
         </tr>
 }

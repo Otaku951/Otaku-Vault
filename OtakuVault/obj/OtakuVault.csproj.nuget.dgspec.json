@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Otaku-Vault\\OtakuVault\\OtakuVault.csproj": {}
+    "C:\\Users\\User\\source\\repos\\Otaku951\\Test\\OtakuVault\\OtakuVault.csproj": {}
   },
   "projects": {
-    "C:\\Otaku-Vault\\OtakuVault\\OtakuVault.csproj": {
+    "C:\\Users\\User\\source\\repos\\Otaku951\\Test\\OtakuVault\\OtakuVault.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Otaku-Vault\\OtakuVault\\OtakuVault.csproj",
+        "projectUniqueName": "C:\\Users\\User\\source\\repos\\Otaku951\\Test\\OtakuVault\\OtakuVault.csproj",
         "projectName": "OtakuVault",
-        "projectPath": "C:\\Otaku-Vault\\OtakuVault\\OtakuVault.csproj",
+        "projectPath": "C:\\Users\\User\\source\\repos\\Otaku951\\Test\\OtakuVault\\OtakuVault.csproj",
         "packagesPath": "C:\\Users\\User\\.nuget\\packages\\",
-        "outputPath": "C:\\Otaku-Vault\\OtakuVault\\obj\\",
+        "outputPath": "C:\\Users\\User\\source\\repos\\Otaku951\\Test\\OtakuVault\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

@@ -1,8 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection;
 using OtakuVault.Data;
-using System;
-using System.Linq;
+using System.Reflection.Emit;
 
 namespace OtakuVault.Models
 {
@@ -15,41 +13,57 @@ namespace OtakuVault.Models
                     DbContextOptions<OtakuVaultContext>>()))
             {
                 // Look for any movies.
-                if (context.Movie.Any())
+                if (context.MediaItem.Any())
                 {
                     return;   // DB has been seeded
                 }
-                context.Movie.AddRange(
-                    new Movie
+                context.MediaItem.AddRange(
+                    new MediaItem
                     {
-                        Title = "When Harry Met Sally",
-                        ReleaseDate = DateTime.Parse("1989-2-12"),
-                        Genre = "Romantic Comedy",
-                        Price = 7.99M
+                        Title = "Attack on Titan",
+                        Type = "Anime",
+                        Genre = "Action, Drama, Fantasy",
+                        ExternalLink = "https://anilist.co/anime/16498",
+                        DateAdded = DateTime.Now,
+                        ReleaseDate = new DateTime(2013, 4, 6),
+                        Description = "Humanity fights for survival against titans.",
+                        Tags = "Titans, War, Walls"
                     },
-                    new Movie
+                    new MediaItem
                     {
-                        Title = "Ghostbusters ",
-                        ReleaseDate = DateTime.Parse("1984-3-13"),
-                        Genre = "Comedy",
-                        Price = 8.99M
-                    },
-                    new Movie
-                    {
-                        Title = "Ghostbusters 2",
-                        ReleaseDate = DateTime.Parse("1986-2-23"),
-                        Genre = "Comedy",
-                        Price = 9.99M
-                    },
-                    new Movie
-                    {
-                        Title = "Rio Bravo",
-                        ReleaseDate = DateTime.Parse("1959-4-15"),
-                        Genre = "Western",
-                        Price = 3.99M
+                        Title = "Solo Leveling",
+                        Type = "Manga",
+                        Genre = "Action, Fantasy",
+                        ExternalLink = "https://novelupdates.com/series/solo-leveling/",
+                        DateAdded = DateTime.Now,
+                        ReleaseDate = new DateTime(2018, 3, 4),
+                        Description = "A weak hunter rises to become the strongest.",
+                        Tags = "Dungeon, Gates, System"
                     }
                 );
                 context.SaveChanges();
+                // Look for any movies.
+                if (context.MediaEntry.Any())
+                {
+                    return;   // DB has been seeded
+                }
+                // Seed MediaEntry
+                context.MediaEntry.AddRange(
+                     new MediaEntry
+                     {
+                         MediaItemId = 20,
+                         Number = 1,
+                         Title = "To You, in 2000 Years",
+                         ReleaseDate = new DateTime(2013, 4, 6)
+                     },
+                    new MediaEntry
+                    {
+                        MediaItemId = 21,
+                        Number = 2,
+                        Title = "That Day",
+                        ReleaseDate = new DateTime(2013, 4, 13)
+                    }
+                );
             }
         }
     }

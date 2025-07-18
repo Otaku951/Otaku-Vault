@@ -1,0 +1,61 @@
+﻿@{
+    ViewData["Title"] = "Admin Dashboard";
+    var users = ViewBag.Users as List<OtakuVault.Models.User>;
+    var media = ViewBag.MediaItems as List<OtakuVault.Models.MediaItem>;
+}
+
+<h2>Admin Dashboard</h2>
+
+<h3>Users</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Role</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.Username</td>
+                <td>@user.Role</td>
+                <td>
+                    <a asp-controller="Account" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-controller="Account" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<h3>Media Library</h3>
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Type</th>
+            <th>Genre</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in media)
+        {
+            <tr>
+                <td>@item.MediaID</td>
+                <td>@item.Title</td>
+                <td>@item.Type</td>
+                <td>@item.Genre</td>
+                <td>
+                    <a asp-controller="MediaItems" asp-action="Edit" asp-route-id="@item.MediaID" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-controller="MediaItems" asp-action="Delete" asp-route-id="@item.MediaID" class="btn btn-sm btn-danger">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

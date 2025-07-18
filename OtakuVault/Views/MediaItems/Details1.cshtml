@@ -1,0 +1,85 @@
+﻿@model OtakuVault.Models.MediaItem
+
+@{
+    ViewData["Title"] = Model.Title;
+    var statusOptions = ViewBag.StatusOptions as List<string>;
+    var userStatus = ViewBag.UserStatus as string;
+}
+
+<div class="container mt-4">
+    <div class="row">
+        <div class="col-md-4 mb-3">
+            <img src="@(Model.ImageData != null ? $"data:image/png;base64,{Convert.ToBase64String(Model.ImageData)}" : "/images/placeholder.png")" class="img-fluid rounded shadow" alt="@Model.Title" />
+        </div>
+
+        <div class="col-md-8">
+            <h2 class="mb-3">@Model.Title</h2>
+            <p><strong>Type:</strong> @Model.Type</p>
+            <p><strong>Genre:</strong> @Model.Tags</p>
+            <p><strong>Description:</strong> @Model.Description</p>
+            <p><strong>Release Date:</strong> @(Model.ReleaseDate?.ToString("yyyy-MM-dd") ?? "Unknown")</p>
+
+            @if (Context.Session.GetInt32("UserID") != null)
+            {
+                <form asp-action="SaveStatus" method="post" class="mt-3">
+                    <input type="hidden" name="mediaId" value="@Model.MediaID" />
+                    <label for="status" class="form-label">Track your progress:</label>
+                    <div class="input-group w-50">
+                        <select name="selectedStatus" class="form-select" required>
+                            <option value="">-- Select Status --</option>
+                            @foreach (var option in statusOptions)
+                            {
+                                var isSelected = userStatus == option ? "selected" : null;
+                                <option value="@option" selected="@isSelected">@option</option>
+                            }
+                        </select>
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            }
+            else
+            {
+                <p class="text-muted mt-3">
+                    <em>Please <a href="/Account/Login">log in</a> to track your progress.</em>
+                </p>
+            }
+        </div>
+    <div class="col-md-8">
+            <h2 class="mb-3">Entries</h2>
+    </div>
+    @if (Context.Session.GetString("Role") == "Admin")
+    {
+        <div class="mt-4">
+            <a asp-controller="MediaItems"
+               asp-action="CreateEntry"
+               asp-route-mediaId="@Model.MediaID"
+               class="btn btn-success">
+                ➕ Add New @(Model.Type == "Anime" ? "Episode" : "Chapter") Entry
+            </a>
+        </div>
+    }
+    @if (Model.Entries != null && Model.Entries.Any())
+    {
+        <hr />
+        <h4 class="mt-4">
+            @(Model.Type == "Anime" ? "Episodes" :
+              Model.Type == "Manga" ? "Chapters" :
+              Model.Type == "Light Novel" ? "Chapters" :
+              "Entries")
+        </h4>
+
+        <ul class="list-group">
+            @foreach (var entry in Model.Entries.OrderBy(e => e.Number))
+            {
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>
+                        <strong>@entry.Number.</strong> @entry.Title
+                    </span>
+                    <span class="text-muted small">@entry.ReleaseDate.ToString("yyyy-MM-dd")</span>
+                </li>
+            }
+        </ul>
+    }
+
+    <a asp-action="Index1" class="btn btn-secondary mt-4">← Back to Media</a>
+</div>

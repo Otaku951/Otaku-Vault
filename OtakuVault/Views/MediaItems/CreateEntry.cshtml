@@ -1,0 +1,38 @@
+﻿@model OtakuVault.Models.MediaEntry
+
+@{
+    ViewData["Title"] = "Add New Entry";
+}
+
+<div class="container mt-4">
+    <h2 class="mb-4">Add New Entry</h2>
+
+    <form asp-action="Create" method="post">
+        <input type="hidden" asp-for="MediaItemId" />
+
+        <div class="mb-3">
+            <label asp-for="Number" class="form-label">Entry Number</label>
+            <input asp-for="Number" class="form-control" />
+            <span asp-validation-for="Number" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="Title" class="form-label">Entry Title</label>
+            <input asp-for="Title" class="form-control" />
+            <span asp-validation-for="Title" class="text-danger"></span>
+        </div>
+
+        <div class="mb-3">
+            <label asp-for="ReleaseDate" class="form-label">Release Date</label>
+            <input asp-for="ReleaseDate" type="date" class="form-control" />
+            <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+        </div>
+
+        <button type="submit" class="btn btn-success">➕ Add Entry</button>
+        <a asp-controller="MediaItems" asp-action="Details" asp-route-id="@Model.MediaItemId" class="btn btn-secondary ms-2">← Back to Media</a>
+    </form>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

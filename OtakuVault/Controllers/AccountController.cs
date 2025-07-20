@@ -1,18 +1,30 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OtakuVault.Data;
 using OtakuVault.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace OtakuVault.Controllers
 {
     public class AccountController : Controller
     {
         private readonly OtakuVaultContext _context;
+
+        private string HashPassword(string password)
+        {
+            using (var sha256 = SHA256.Create())
+            {
+                var bytes = Encoding.UTF8.GetBytes(password);
+                var hash = sha256.ComputeHash(bytes);
+                return Convert.ToBase64String(hash);
+            }
+        }
 
         public AccountController(OtakuVaultContext context)
         {
@@ -42,6 +54,9 @@ namespace OtakuVault.Controllers
                 return View(user);
             }
 
+            // Hash the password before saving
+            user.Password = HashPassword(user.Password);
+
             // Set default role
             user.Role = "User";
 
@@ -62,8 +77,9 @@ namespace OtakuVault.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
+            var hashedPassword = HashPassword(password);
             var user = _context.UserAccount
-                .FirstOrDefault(u => u.Username == username && u.Password == password);
+                .FirstOrDefault(u => u.Username == username && u.Password == hashedPassword);
 
             if (user == null)
             {
@@ -85,6 +101,7 @@ namespace OtakuVault.Controllers
             HttpContext.Session.Clear();
             return RedirectToAction("Index", "Home");
         }
+
 
         // GET: Account/Details/5
         public async Task<IActionResult> Details(int? id)
@@ -158,6 +175,7 @@ namespace OtakuVault.Controllers
             {
                 try
                 {
+                    userAccount.Password = HashPassword(userAccount.Password);
                     _context.Update(userAccount);
                     await _context.SaveChangesAsync();
                 }

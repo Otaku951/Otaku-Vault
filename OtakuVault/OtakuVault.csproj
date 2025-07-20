@@ -14,6 +14,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="Views\Account\Create.cshtml" />
+    <Content Include="Views\Account\Delete.cshtml" />
+    <Content Include="Views\Account\Details.cshtml" />
+    <Content Include="Views\Account\Edit.cshtml" />
+    <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\Login.cshtml" />
     <Content Include="Views\Account\Register.cshtml" />
   </ItemGroup>
@@ -29,10 +34,18 @@
 
   <ItemGroup>
     <None Include="Views\Account\Create.cshtml" />
+    <None Include="Views\Admin\Dashboard.cshtml" />
+    <None Include="Views\Admin\DashboardStats.cshtml" />
     <None Include="Views\Account\Delete.cshtml" />
     <None Include="Views\Account\Details.cshtml" />
     <None Include="Views\Account\Edit.cshtml" />
     <None Include="Views\Account\Index.cshtml" />
+    <None Include="Views\User\ReadingList.cshtml" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Migrations\" />
+    <Folder Include="wwwroot\css\" />
   </ItemGroup>
 
 </Project>

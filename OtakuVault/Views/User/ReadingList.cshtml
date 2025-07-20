@@ -1,0 +1,31 @@
+﻿@model List<OtakuVault.Models.UserMediaStatus>
+
+@{
+    ViewData["Title"] = "My Reading List";
+}
+
+<h2>My Reading List</h2>
+
+@if (!Model.Any())
+{
+    <p>You haven't tracked any media yet.</p>
+}
+else
+{
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+        @foreach (var item in Model)
+        {
+            <div class="col">
+                <div class="card h-100">
+                    <img src="@(item.Media.ImageData != null ? $"data:image/png;base64,{Convert.ToBase64String(item.Media.ImageData)}" : "/images/placeholder.png")" " class="card-img-top" alt="@item.Media.Title" />
+                    <div class="card-body">
+                        <h5 class="card-title">@item.Media.Title</h5>
+                        <p class="card-text">Type: @item.Media.Type</p>
+                        <p class="card-text">Status: <strong>@item.Status</strong></p>
+                        <a href="@item.Media.ExternalLink" target="_blank" class="btn btn-primary">Watch/Read</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+}

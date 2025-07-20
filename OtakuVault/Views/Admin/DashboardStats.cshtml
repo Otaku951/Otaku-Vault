@@ -1,0 +1,56 @@
+﻿@{
+    ViewData["Title"] = "Statistics Dashboard";
+    var typeCounts = ViewBag.MediaTypeCounts as List<dynamic> ?? new List<dynamic>();
+    var topTracked = ViewBag.TopTracked as List<dynamic> ?? new List<dynamic>();
+}
+
+<h2>Statistics Dashboard</h2>
+
+<div class="row mt-4">
+    <div class="col-md-3">
+        <div class="card text-white bg-primary mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Users</h5>
+                <p class="card-text">@ViewBag.TotalUsers</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-success mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Admins</h5>
+                <p class="card-text">@ViewBag.TotalAdmins</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="card text-white bg-info mb-3">
+            <div class="card-body">
+                <h5 class="card-title">Total Media</h5>
+                <p class="card-text">@ViewBag.TotalMedia</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<h4 class="mt-4">Media Count by Type</h4>
+<ul class="list-group mb-4">
+    @foreach (var item in typeCounts)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            @item.Type
+            <span class="badge bg-primary rounded-pill">@item.Count</span>
+        </li>
+    }
+</ul>
+
+<h4>Top 5 Most Tracked Media</h4>
+<ol class="list-group">
+    @foreach (var media in topTracked)
+    {
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+            @media.MediaTitle
+            <span class="badge bg-secondary rounded-pill">@media.Count tracked</span>
+        </li>
+    }
+</ol>

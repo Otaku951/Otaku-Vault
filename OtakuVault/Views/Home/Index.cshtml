@@ -1,32 +1,66 @@
-﻿@{
+﻿@model List<OtakuVault.Models.MediaItem>
+@{
     ViewData["Title"] = "Welcome to Otaku Vault";
+    var slides = Model.Chunk(3).ToList(); // Show 3 cards per slide
+    var today = DateTime.Today;
 }
 
 <div class="text-center">
-    <h1 class="display-4">Otaku Vault</h1>
-    <p class="lead">
-        Track your favorite Anime, Manga, and Light Novels — and jump directly to streaming and reading sources!
-    </p>
-</div>
+    <h1 class="display-4">Welcome to OtakuVault</h1>
+    <p class="lead">Track your favorite Anime, Manga, and Novels.</p>
+    <hr />
 
-<hr />
+    <h4>Latest Media (Added Today & Yesterday)</h4>
+    @if (!Model.Any())
+    {
+        <p>No new media in the last two days.</p>
+    }
+    else
+    {
+        <div id="multiCardCarousel" class="carousel slide carousel-dark" data-bs-ride="carousel" data-bs-interval="4000">
+            <div class="carousel-inner">
 
-<h4>Latest Media Updates</h4>
-<ul class="list-group">
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span><strong>One Piece</strong> – Episode 1100 (Watch on Crunchyroll)</span>
-        <a href="https://www.crunchyroll.com/series/GYQ4MW246/one-piece" target="_blank" class="btn btn-sm btn-outline-primary">Watch</a>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span><strong>Solo Leveling</strong> – Chapter 210 (Read on Webtoon)</span>
-        <a href="https://www.webtoons.com/en/action/solo-leveling/list?title_no=3182" target="_blank" class="btn btn-sm btn-outline-success">Read</a>
-    </li>
-    <li class="list-group-item d-flex justify-content-between align-items-center">
-        <span><strong>Re:Zero</strong> – Volume 8 (Read on NovelUpdates)</span>
-        <a href="https://www.novelupdates.com/series/rezero-kara-hajimeru-isekai-seikatsu/" target="_blank" class="btn btn-sm btn-outline-info">Read</a>
-    </li>
-</ul>
+                @for (int i = 0; i < slides.Count; i++)
+                {
+                    var group = slides[i];
+                    <div class="carousel-item @(i == 0 ? "active" : "")">
+                        <div class="row justify-content-center">
+                            @foreach (var item in group)
+                            {
+                                <div class="col-md-3 mb-3">
+                                    <div class="card h-100 shadow-sm position-relative">
+                                        <img src="@(item.ImageData != null ? $"data:image/png;base64,{Convert.ToBase64String(item.ImageData)}" : "/images/placeholder.png")" " class="card-img-top" alt="@item.Title" />
 
-<div class="mt-4 text-center">
-    <a href="/Media/Index" class="btn btn-primary btn-lg">Browse All Media</a>
+                                        @if (item.DateAdded.Date == today)
+                                        {
+                                            <span class="badge bg-danger position-absolute top-0 start-0 m-2">NEW</span>
+                                        }
+
+                                        <div class="card-body">
+                                            <h5 class="card-title">@item.Title</h5>
+                                            <p class="card-text">@item.Type - @item.Genre</p>
+                                            <p class="card-text text-muted">
+                                                <small>Added: @item.DateAdded.ToShortDateString()</small>
+                                            </p>
+                                            <a asp-controller="MediaLibrary" asp-action="MediaDetails" asp-route-id="@item.Id" class="btn btn-primary">View</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+
+            <!-- Moved arrows outward -->
+            <button class="carousel-control-prev" type="button" data-bs-target="#multiCardCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon bg-dark p-3 rounded" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#multiCardCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon bg-dark p-3 rounded" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    }
 </div>

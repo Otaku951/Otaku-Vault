@@ -14,9 +14,9 @@ namespace OtakuVault.Data
         {
         }
 
-        public DbSet<OtakuVault.Models.Movie> Movie { get; set; } = default!;
-        public DbSet<OtakuVault.Models.Novel> Novel { get; set; } = default!;
         public DbSet<OtakuVault.Models.MediaItem> MediaItem { get; set; } = default!;
         public DbSet<OtakuVault.Models.UserAccount> UserAccount { get; set; } = default!;
+        public DbSet<OtakuVault.Models.UserMediaStatus> UserMediaStatus { get; set; } = default!;
+        public DbSet<OtakuVault.Models.MediaEntry> MediaEntry { get; set; } = default!;
     }
 }

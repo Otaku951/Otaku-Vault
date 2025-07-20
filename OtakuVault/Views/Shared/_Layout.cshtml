@@ -55,7 +55,7 @@
                     <ul class="navbar-nav">
                         @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
                         @{
-                            var username = Context.Session.GetString("Username"); // HttpContextAccessor.HttpContext.Session.GetString("Username");
+                            var username = Context.Session.GetString("Username");
                         }
 
                         @if (!string.IsNullOrEmpty(username))

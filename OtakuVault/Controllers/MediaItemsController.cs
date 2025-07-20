@@ -163,48 +163,6 @@ namespace OtakuVault.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
-            /*
-            if (id != mediaItem.Id)
-            {
-                return NotFound();
-            }
-
-            if (imageFile != null && imageFile.Length > 0)
-            {
-                using (var ms = new MemoryStream())
-                {
-                    await imageFile.CopyToAsync(ms);
-                    mediaItem.ImageData = ms.ToArray();
-                }
-            }
-            else
-            {
-                // retain existing image data
-                var existingItem = await _context.MediaItem.AsNoTracking().FirstOrDefaultAsync(m => m.Id == id);
-                mediaItem.ImageData = existingItem?.ImageData;
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(mediaItem);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!MediaItemExists(mediaItem.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(mediaItem);*/
         }
 
         // GET: MediaItems/Delete/5

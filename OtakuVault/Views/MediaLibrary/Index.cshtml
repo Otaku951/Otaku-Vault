@@ -16,18 +16,18 @@
 
         <div class="col-md-3">
             @Html.DropDownList(
-            "type",
-                        ViewBag.TypeList as SelectList,
-                        new { @class = "form-select" }
-                        )
+                "type",
+                ViewBag.TypeList as SelectList,
+                new { @class = "form-select" }
+            )
         </div>
 
         <div class="col-md-3">
             @Html.DropDownList(
-                        "view",
-                        ViewBag.ViewList as SelectList,
-                        new { @class = "form-select" }
-                        )
+                "view",
+                ViewBag.ViewList as SelectList,
+                new { @class = "form-select" }
+            )
         </div>
 
         <div class="col-md-2">

@@ -17,8 +17,6 @@ namespace OtakuVault.Models
                     return; // DB has been seeded
                 }
 
-                await context.Database.ExecuteSqlRawAsync("DBCC CHECKIDENT ('MediaItem', RESEED, 0)");
-
                 context.MediaItem.AddRange(
                     new MediaItem
                     {

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using OtakuVault.Data;
@@ -91,6 +92,37 @@ namespace OtakuVault.Controllers
             HttpContext.Session.SetInt32("UserID", user.Id);
             HttpContext.Session.SetString("Username", user.Username);
             HttpContext.Session.SetString("Role", user.Role);
+            HttpContext.Session.SetInt32("OtakuVaultCoins", user.OtakuVaultCoins);
+
+            // Determine if daily bonus can be claimed
+            bool canClaim = user.LastBonusClaimDate == null || user.LastBonusClaimDate.Value.Date < DateTime.Today;
+            HttpContext.Session.SetString("CanClaimBonus", canClaim.ToString().ToLower());
+
+            return RedirectToAction("Index", "Home");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ClaimDailyBonus()
+        {
+            var userId = HttpContext.Session.GetInt32("UserID");
+            if (userId == null) 
+                return RedirectToAction("Login");
+
+            var user = await _context.UserAccount.FindAsync(userId);
+            if (user == null) 
+                return RedirectToAction("Login");
+
+            if (user.LastBonusClaimDate == null || user.LastBonusClaimDate.Value.Date < DateTime.Today)
+            {
+                user.OtakuVaultCoins += 1; // reward amount
+                user.LastBonusClaimDate = DateTime.Now;
+
+                await _context.SaveChangesAsync();
+
+                // Update session
+                HttpContext.Session.SetInt32("OtakuVaultCoins", user.OtakuVaultCoins);
+                HttpContext.Session.SetString("CanClaimBonus", "false");
+            }
 
             return RedirectToAction("Index", "Home");
         }

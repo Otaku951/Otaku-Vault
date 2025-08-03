@@ -1,0 +1,35 @@
+﻿@model IEnumerable<OtakuVault.Models.CoinPackage>
+
+<h1>Buy OtakuVault Coins</h1>
+
+<!-- Predefined Coin Packages -->
+<h3>Choose a Coin Package</h3>
+<form asp-action="BuyCoins" method="post">
+    <div class="row">
+        @foreach (var package in Model)
+        {
+            <div class="col-md-4">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">@package.Name</h5>
+                        <p>@package.Coins coins for @package.Price</p>
+                        <input type="radio" name="packageId" value="@package.Id" /> Select Package
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Buy Coins</button>
+</form>
+
+<hr />
+
+<!-- Custom Coin Purchase -->
+<h3>Or Buy Custom Coins</h3>
+<form asp-action="BuyCoins" method="post">
+    <div class="form-group">
+        <label for="customAmount">Enter amount</label>
+        <input type="number" name="customAmount" id="customAmount" class="form-control" required />
+    </div>
+    <button type="submit" class="btn btn-primary mt-3">Buy Custom Coins</button>
+</form>

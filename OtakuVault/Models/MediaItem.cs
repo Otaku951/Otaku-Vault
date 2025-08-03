@@ -15,6 +15,6 @@ namespace OtakuVault.Models
         public DateTime? ReleaseDate { get; set; }
         public string? ExternalLink { get; set; }
         public DateTime DateAdded { get; set; } = DateTime.Now;
-        public ICollection<MediaEntry> Entries { get; set; } = new List<MediaEntry>(); // Link to episodes/chapters
+        public ICollection<MediaEntry> Entries { get; set; } = new List<MediaEntry>();
     }
 }

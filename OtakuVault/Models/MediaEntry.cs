@@ -4,9 +4,8 @@
     {
         public int Id { get; set; }
         public int MediaItemId { get; set; }
-
-        public string Group { get; set; }
-        public int Release { get; set; } // Episode 1, Chapter 1
+        public string Title { get; set; }
+        public int Release { get; set; }
         public DateTime ReleaseDate { get; set; }
     }
 }

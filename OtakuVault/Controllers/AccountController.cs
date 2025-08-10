@@ -78,6 +78,7 @@ namespace OtakuVault.Controllers
         [HttpPost]
         public IActionResult Login(string username, string password)
         {
+            // Validate input
             var hashedPassword = HashPassword(password);
             var user = _context.UserAccount
                 .FirstOrDefault(u => u.Username == username && u.Password == hashedPassword);
@@ -104,6 +105,7 @@ namespace OtakuVault.Controllers
         [HttpPost]
         public async Task<IActionResult> ClaimDailyBonus()
         {
+            // Check if user is logged in
             var userId = HttpContext.Session.GetInt32("UserID");
             if (userId == null) 
                 return RedirectToAction("Login");
@@ -114,7 +116,8 @@ namespace OtakuVault.Controllers
 
             if (user.LastBonusClaimDate == null || user.LastBonusClaimDate.Value.Date < DateTime.Today)
             {
-                user.OtakuVaultCoins += 1; // reward amount
+                // Claim bonus
+                user.OtakuVaultCoins += 1;
                 user.LastBonusClaimDate = DateTime.Now;
 
                 await _context.SaveChangesAsync();
@@ -170,7 +173,7 @@ namespace OtakuVault.Controllers
             {
                 _context.Add(userAccount);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Dashboard", "Admin");
             }
             return View(userAccount);
         }
@@ -207,6 +210,7 @@ namespace OtakuVault.Controllers
             {
                 try
                 {
+                    // If password is changed, hash it before saving
                     userAccount.Password = HashPassword(userAccount.Password);
                     _context.Update(userAccount);
                     await _context.SaveChangesAsync();
@@ -222,7 +226,7 @@ namespace OtakuVault.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Dashboard", "Admin");
             }
             return View(userAccount);
         }
@@ -257,7 +261,7 @@ namespace OtakuVault.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Dashboard", "Admin");
         }
 
         private bool UserAccountExists(int id)

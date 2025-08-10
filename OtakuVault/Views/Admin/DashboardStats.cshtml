@@ -1,56 +1,144 @@
 ﻿@{
     ViewData["Title"] = "Statistics Dashboard";
-    var typeCounts = ViewBag.MediaTypeCounts as List<dynamic> ?? new List<dynamic>();
-    var topTracked = ViewBag.TopTracked as List<dynamic> ?? new List<dynamic>();
 }
 
 <h2>Statistics Dashboard</h2>
 
-<div class="row mt-4">
-    <div class="col-md-3">
-        <div class="card text-white bg-primary mb-3">
+<!-- User Stats -->
+<h3>User Statistics</h3>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white mb-3 shadow">
+            <div class="card-header">Total Users</div>
             <div class="card-body">
-                <h5 class="card-title">Total Users</h5>
-                <p class="card-text">@ViewBag.TotalUsers</p>
+                <h5 class="card-title">@ViewBag.TotalUsers</h5>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-success mb-3">
+
+	<div class="col-md-4">
+		<div class="card bg-danger text-white mb-3 shadow">
+			<div class="card-header">Admins</div>
+			<div class="card-body">
+				<h5 class="card-title">@ViewBag.TotalAdmins</h5>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="card bg-success text-white mb-3 shadow">
+			<div class="card-header">Active Users</div>
+			<div class="card-body">
+				<h5 class="card-title">@ViewBag.TotalActiveUsers</h5>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr />
+
+<!-- Media Item Stats -->
+<h3>Media Item Statistics</h3>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card bg-info text-white mb-3 shadow">
+            <div class="card-header">Total Media</div>
             <div class="card-body">
-                <h5 class="card-title">Total Admins</h5>
-                <p class="card-text">@ViewBag.TotalAdmins</p>
+                <h5 class="card-title">@ViewBag.TotalMedia</h5>
             </div>
         </div>
     </div>
-    <div class="col-md-3">
-        <div class="card text-white bg-info mb-3">
+</div>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white mb-3 shadow">
+            <div class="card-header">Anime</div>
             <div class="card-body">
-                <h5 class="card-title">Total Media</h5>
-                <p class="card-text">@ViewBag.TotalMedia</p>
+                <h5 class="card-title">@ViewBag.AnimeCount</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-success text-white mb-3 shadow">
+            <div class="card-header">Manga</div>
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.MangaCount</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-warning text-dark mb-3 shadow">
+            <div class="card-header">Light Novels</div>
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.NovelCount</h5>
+            </div>
+        </div>
+    </div>
+</div>
+<hr />
+
+<!-- Media Entries Stats -->
+<h3>Media Entry Statistics</h3>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card bg-secondary text-white mb-3 shadow">
+            <div class="card-header">Total Entries</div>
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.TotalEntries</h5>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="card bg-dark text-white mb-3 shadow">
+            <div class="card-header">Total Unlocks</div>
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.TotalUnlocks</h5>
             </div>
         </div>
     </div>
 </div>
 
-<h4 class="mt-4">Media Count by Type</h4>
-<ul class="list-group mb-4">
-    @foreach (var item in typeCounts)
-    {
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            @item.Type
-            <span class="badge bg-primary rounded-pill">@item.Count</span>
-        </li>
-    }
-</ul>
+<hr />
 
-<h4>Top 5 Most Tracked Media</h4>
-<ol class="list-group">
-    @foreach (var media in topTracked)
-    {
-        <li class="list-group-item d-flex justify-content-between align-items-center">
-            @media.MediaTitle
-            <span class="badge bg-secondary rounded-pill">@media.Count tracked</span>
-        </li>
-    }
-</ol>
+
+<!-- Transaction Stats -->
+<h3>Transaction Statistics</h3>
+<div class="row">
+    <div class="col-md-4">
+        <div class="card bg-primary text-white mb-3 shadow">
+            <div class="card-header">Total Coin Packages</div>
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.TotalCoinPackages</h5>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card bg-success text-white mb-3 shadow">
+            <div class="card-header">Total Transactions</div>
+            <div class="card-body">
+                <h5 class="card-title">@ViewBag.TotalTransactions</h5>
+            </div>
+        </div>
+    </div>
+
+	<div class="col-md-4">
+		<div class="card bg-info text-white mb-3 shadow">
+			<div class="card-header">Average Transaction Amount</div>
+			<div class="card-body">
+				<h5 class="card-title">$@ViewBag.AverageTransactionAmount</h5>
+			</div>
+		</div>
+	</div>
+
+	<div class="col-md-4">
+		<div class="card bg-warning text-dark mb-3 shadow">
+			<div class="card-header">Total Coins Added</div>
+			<div class="card-body">
+				<h5 class="card-title">@ViewBag.TotalCoinsAdded</h5>
+			</div>
+		</div>
+	</div>
+</div>
+
+<hr />

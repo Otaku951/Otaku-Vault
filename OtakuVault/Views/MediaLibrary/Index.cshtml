@@ -88,24 +88,30 @@
         {
             foreach (var group in grouped)
             {
-                <h3 id="@group.Key">@group.Key</h3>
-                <ul class="list-unstyled mb-4">
+                <h4 id="@group.Key" class="mt-4 border-bottom pb-1">@group.Key</h4>
+                <div class="list-group mb-4">
                     @foreach (var item in group.Value.OrderBy(m => m.Title))
                     {
-                        <li>
-                            <strong>@item.Title</strong> - <span class="text-muted">@item.Type</span>
-                            <a asp-controller="MediaLibrary" asp-action="MediaDetails" asp-route-id="@item.Id" class="btn btn-primary btn-sm">
-                                View
-                            </a>
-                            @if (!string.IsNullOrEmpty(item.ExternalLink))
-                            {
-                                <a href="@item.ExternalLink" target="_blank" class="ms-2">View</a>
-                            }
-                        </li>
+                        <div class="list-group-item d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>@item.Title</strong>
+                                <span class="text-muted">(@item.Type @if (!string.IsNullOrEmpty(item.Genre)) { @($" - {item.Genre}") })</span>
+                            </div>
+                            <div>
+                                <a asp-controller="MediaLibrary" asp-action="MediaDetails" asp-route-id="@item.Id" class="btn btn-sm btn-primary">
+                                    View
+                                </a>
+                                @if (!string.IsNullOrEmpty(item.ExternalLink))
+                                {
+                                    <a href="@item.ExternalLink" target="_blank" class="btn btn-sm btn-outline-secondary ms-1">
+                                        More
+                                    </a>
+                                }
+                            </div>
+                        </div>
                     }
-                </ul>
+                </div>
             }
         }
     }
-
 </div>

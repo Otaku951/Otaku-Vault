@@ -12,6 +12,7 @@ namespace OtakuVault.Controllers
         public UserController(OtakuVaultContext context)
         {
             _context = context;
+
         }
 
         public IActionResult Index()
@@ -21,10 +22,12 @@ namespace OtakuVault.Controllers
 
         public IActionResult ReadingList()
         {
+            // Ensure the user is logged in by checking session for UserID
             var userId = HttpContext.Session.GetInt32("UserID");
             if (userId == null)
                 return RedirectToAction("Login", "Account");
 
+            // Retrieve the user's media status entries, including related media details
             var tracked = _context.UserMediaStatus
                 .Include(ums => ums.Media)
                 .Where(ums => ums.UserID == userId)

@@ -20,5 +20,6 @@ namespace OtakuVault.Data
         public DbSet<OtakuVault.Models.MediaEntry> MediaEntry { get; set; } = default!;
         public DbSet<OtakuVault.Models.Transaction> Transactions { get; set; } = default!;
         public DbSet<OtakuVault.Models.CoinPackage> CoinPackages { get; set; } = default!;
+        public DbSet<OtakuVault.Models.EntryUnlock> EntryUnlocks { get; set; } = default!;
     }
 }

@@ -1,0 +1,63 @@
+﻿@model OtakuVault.Models.MediaEntry
+
+@{
+    ViewData["Title"] = Model.Title;
+    var prev = ViewBag.PreviousEntry as OtakuVault.Models.MediaEntry;
+    var next = ViewBag.NextEntry as OtakuVault.Models.MediaEntry;
+}
+
+<div class="container mt-4">
+    <h2 class="mb-3">@Model.Title</h2>
+
+    <div class="media-content text-center mb-4">
+        @if (Model.ContentType == "Anime" && Model.ContentData != null)
+        {
+            <video controls style="max-width:100%">
+                <source src="data:video/mp4;base64,@Convert.ToBase64String(Model.ContentData)" type="video/mp4" />
+                Your browser does not support the video tag.
+            </video>
+        }
+        else if (Model.ContentType == "Manga" && Model.ContentData != null)
+        {
+            <img src="data:image/png;base64,@Convert.ToBase64String(Model.ContentData)" class="img-fluid rounded shadow" alt="@Model.Title" />
+        }
+        else if (Model.ContentType == "Light Novel" && Model.ContentData != null)
+        {
+            <div class="novel-content p-3 border rounded">
+                <pre style="white-space:pre-wrap;">@System.Text.Encoding.UTF8.GetString(Model.ContentData)</pre>
+            </div>
+        }
+        else
+        {
+            <p>No content available.</p>
+        }
+    </div>
+
+    <div class="d-flex justify-content-between mt-4">
+        @if (prev != null)
+        {
+            <a asp-controller="MediaEntries" asp-action="ViewEntry" asp-route-id="@prev.Id" class="btn btn-secondary">
+                ← Previous @(Model.ContentType == "Anime" ? "Episode" : "Chapter")
+            </a>
+        }
+        else
+        {
+            <button class="btn btn-secondary" disabled>← Previous</button>
+        }
+
+        @if (next != null && next.IsLocked == false)
+        {
+            <a asp-controller="MediaEntries" asp-action="ViewEntry" asp-route-id="@next.Id" class="btn btn-secondary">
+                Next @(Model.ContentType == "Anime" ? "Episode" : "Chapter") →
+            </a>
+        }
+        else
+        {
+            <button class="btn btn-secondary" disabled>Next →</button>
+        }
+    </div>
+
+    <a asp-controller="MediaLibrary" asp-action="MediaDetails" asp-route-id="@Model.MediaItemId" class="btn btn-secondary mt-4">
+        Back to Media Details
+    </a>
+</div>

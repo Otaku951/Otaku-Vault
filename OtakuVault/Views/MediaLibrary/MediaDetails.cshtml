@@ -15,7 +15,8 @@
         <div class="col-md-8">
             <h2 class="mb-3">@Model.Title</h2>
             <p><strong>Type:</strong> @Model.Type</p>
-            <p><strong>Genre:</strong> @Model.Tags</p>
+            <p><strong>Genre:</strong> @Model.Genre</p>
+            <p><strong>Tags:</strong> @Model.Tags</p>
             <p><strong>Description:</strong> @Model.Description</p>
             <p><strong>Release Date:</strong> @(Model.ReleaseDate?.ToString("yyyy-MM-dd") ?? "Unknown")</p>
 
@@ -44,14 +45,16 @@
                 </p>
             }
         </div>
+
+
     <div class="col-md-8">
             <h2 class="mb-3">Entries</h2>
     </div>
     @if (Context.Session.GetString("Role") == "Admin")
     {
         <div class="mt-4">
-            <a asp-controller="MediaItems"
-               asp-action="CreateEntry"
+            <a asp-controller="MediaEntries"
+               asp-action="Create"
                asp-route-mediaId="@Model.Id"
                class="btn btn-success">
                 ➕ Add New @(Model.Type == "Anime" ? "Episode" : "Chapter") Entry
@@ -68,18 +71,53 @@
               "Entries")
         </h4>
 
-        <ul class="list-group">
-            @foreach (var entry in Model.Entries.OrderBy(e => e.Release))
-            {
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <span>
-                        <strong>@entry.Release.</strong> 
-                    </span>
-                    <span class="text-muted small">@entry.ReleaseDate.ToString("yyyy-MM-dd")</span>
-                </li>
-            }
-        </ul>
-    }
+        <div class="list-group">
+            @foreach (var entry in Model.Entries)
+                {
+                    <div class="list-group-item">
+                        <div class="d-flex justify-content-between align-items-center">
+                            <div>
+                                <strong>@(Model.Type == "Anime" ? "Episode" :
+                                          Model.Type == "Manga" ? "Chapter" :
+                                          Model.Type == "Light Novel" ? "Chapter" :
+                                          "Entries") 
+                                          @entry.Release</strong>
+                            </div>
+                            <div>
+                                <strong>@entry.Title</strong>
+                            </div>
+                            <div>
+                                <small>Release Date: @entry.ReleaseDate.ToString("yyyy-MM-dd")</small>
+                            </div>
+                            <div>
+                                @if (entry.IsLocked)
+                                {
+                                    <form asp-controller="MediaEntries" asp-action="UnlockEntry" asp-route-id="@entry.Id" method="post" class="d-inline-block">
+                                        <input type="hidden" name="entryId" value="@entry.Id" />
+                                        <button type="submit" class="btn btn-info btn-sm">Unlock Entry (50 Coins)</button>
+                                    </form>
+                                }
+                                else
+                                {
+                                    <a asp-controller="MediaEntries" asp-action="ViewEntry" asp-route-id="@entry.Id" class="btn btn-info btn-sm">View</a>
+                                }
+                                @if (Context.Session.GetString("Role") == "Admin")
+                                {
+                                    <a asp-controller="MediaEntries" asp-action="Edit" asp-route-id="@entry.Id" class="btn btn-warning btn-sm">Edit</a>
+                                    <form asp-controller="MediaEntries" asp-action="Delete" asp-route-id="@entry.Id" class="d-inline-block">
+                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p>No entries available yet.</p>
+        }
 
     <a asp-action="Index" class="btn btn-secondary mt-4">← Back to Media</a>
 </div>

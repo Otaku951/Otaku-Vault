@@ -15,9 +15,9 @@ namespace OtakuVault.Models
                 if (!context.CoinPackages.Any())
                 {
                     context.CoinPackages.AddRange(
-                        new CoinPackage { Name = "Basic Pack", Coins = 100, Price = 1.00m },
-                        new CoinPackage { Name = "Advanced Pack", Coins = 500, Price = 4.50m },
-                        new CoinPackage { Name = "Premium Pack", Coins = 1000, Price = 8.00m }
+                        new CoinPackage { Name = "Basic Pack", Coins = 100, Price = 1.00 },
+                        new CoinPackage { Name = "Advanced Pack", Coins = 500, Price = 4.50 },
+                        new CoinPackage { Name = "Premium Pack", Coins = 1000, Price = 8.00 }
                     );
                     context.SaveChanges();
                 }
@@ -71,7 +71,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2018, 1, 11),
                             ExternalLink = "https://www.netflix.com/title/80223227",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData4")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData4")
                         },
                         new MediaItem
                         {
@@ -83,7 +83,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2017, 7, 7),
                             ExternalLink = "https://www.hidive.com/tv/made-in-abyss",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData5")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData5")
                         },
                         new MediaItem
                         {
@@ -95,7 +95,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2014, 1, 23),
                             ExternalLink = "https://www.novelupdates.com/series/mushoku-tensei/",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData6")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData6")
                         },
                         new MediaItem
                         {
@@ -107,7 +107,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(1990, 8, 25),
                             ExternalLink = "https://www.viz.com/berserk",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData7")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData7")
                         },
                         new MediaItem
                         {
@@ -119,7 +119,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2014, 1, 24),
                             ExternalLink = "https://www.novelupdates.com/series/rezero-kara-hajimeru-isekai-seikatsu/",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData8")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData8")
                         },
                         new MediaItem
                         {
@@ -131,7 +131,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2019, 4, 6),
                             ExternalLink = "https://www.crunchyroll.com/series/GY5P48XEY/demon-slayer-kimetsu-no-yaiba",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData9")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData9")
                         },
                         new MediaItem
                         {
@@ -143,7 +143,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2011, 4, 6),
                             ExternalLink = "https://www.crunchyroll.com/steinsgate",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData10")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData10")
                         },
                         new MediaItem
                         {
@@ -155,7 +155,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2006, 10, 3),
                             ExternalLink = "https://www.netflix.com/title/70204970",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData11")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData11")
                         },
                         new MediaItem
                         {
@@ -167,7 +167,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2011, 9, 8),
                             ExternalLink = "https://www.viz.com/tokyo-ghoul",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData12")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData12")
                         },
                         new MediaItem
                         {
@@ -179,7 +179,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2008, 10, 2),
                             ExternalLink = "https://www.crunchyroll.com/toradora",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData13")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData13")
                         },
                         new MediaItem
                         {
@@ -191,7 +191,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2011, 10, 18),
                             ExternalLink = "https://www.viz.com/horimiya",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData14")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData14")
                         },
                         new MediaItem
                         {
@@ -203,7 +203,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2009, 4, 10),
                             ExternalLink = "https://www.novelupdates.com/series/sword-art-online/",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData15")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData15")
                         },
                         new MediaItem
                         {
@@ -215,7 +215,7 @@ namespace OtakuVault.Models
                             ReleaseDate = new DateTime(2006, 2, 10),
                             ExternalLink = "https://www.novelupdates.com/series/spice-and-wolf/",
                             DateAdded = DateTime.Now,
-                            ImageData = Encoding.UTF8.GetBytes("ImageData16")
+                            ImageData = Encoding.UTF8.GetBytes("FakeImageData16")
                         }
                     );
 

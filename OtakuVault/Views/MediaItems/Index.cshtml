@@ -55,7 +55,7 @@
                 @Html.DisplayFor(modelItem => item.Genre)
             </td>
             <td>
-                @(item.ImageData != null && item.ImageData.Length > 0 ? "Yes" : "No")
+                @(item.ImageData != null ? "Yes" : "No")
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Tags)

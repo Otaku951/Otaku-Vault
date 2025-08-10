@@ -37,12 +37,34 @@ namespace OtakuVault.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.HasKey("Id");
 
                     b.ToTable("CoinPackages");
+                });
+
+            modelBuilder.Entity("OtakuVault.Models.EntryUnlock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("MediaEntryId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("UnlockDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("EntryUnlocks");
                 });
 
             modelBuilder.Entity("OtakuVault.Models.MediaEntry", b =>
@@ -53,14 +75,18 @@ namespace OtakuVault.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<string>("MangaImageFolder")
+                    b.Property<byte[]>("ContentData")
+                        .HasColumnType("varbinary(max)");
+
+                    b.Property<string>("ContentType")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("IsLocked")
+                        .HasColumnType("bit");
 
                     b.Property<int>("MediaItemId")
                         .HasColumnType("int");
-
-                    b.Property<string>("NovelContent")
-                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Release")
                         .HasColumnType("int");
@@ -70,9 +96,6 @@ namespace OtakuVault.Migrations
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("VideoUrl")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -132,8 +155,8 @@ namespace OtakuVault.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<decimal>("Amount")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Amount")
+                        .HasColumnType("float");
 
                     b.Property<int>("CoinsAdded")
                         .HasColumnType("int");
@@ -156,9 +179,6 @@ namespace OtakuVault.Migrations
                         .HasColumnType("int");
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<decimal>("Balance")
-                        .HasColumnType("decimal(18,2)");
 
                     b.Property<DateTime?>("LastBonusClaimDate")
                         .HasColumnType("datetime2");

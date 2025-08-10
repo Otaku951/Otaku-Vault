@@ -62,6 +62,8 @@ namespace OtakuVault.Controllers
             if (mediaItem == null) return NotFound();
 
             var userId = HttpContext.Session.GetInt32("UserID");
+            var unlockedEntries = new List<int>();
+
             if (userId == null)
             {
                 ViewBag.UserStatus = null;
@@ -72,8 +74,14 @@ namespace OtakuVault.Controllers
                     .FirstOrDefaultAsync(s => s.UserID == userId && s.MediaID == id);
 
                 ViewBag.UserStatus = status?.Status;
+
+                unlockedEntries = await _context.EntryUnlocks
+                    .Where(u => u.UserId == userId.Value)
+                    .Select(u => u.MediaEntryId)
+                    .ToListAsync();
             }
 
+            ViewBag.UnlockedEntries = unlockedEntries;
             ViewBag.StatusOptions = new List<string> { "Watching", "Completed", "Plan to Watch" };
             return View(mediaItem);
         }

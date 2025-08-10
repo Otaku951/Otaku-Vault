@@ -10,7 +10,6 @@ namespace OtakuVault.Models
         [DataType(DataType.Password)]
         public required string Password { get; set; }
         public required string Role { get; set; }
-        public decimal Balance { get; set; }  
         public int OtakuVaultCoins { get; set; }
         public DateTime? LastBonusClaimDate { get; set; }
     }

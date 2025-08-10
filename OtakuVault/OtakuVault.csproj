@@ -43,8 +43,4 @@
     <None Include="Views\User\ReadingList.cshtml" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Migrations\" />
-  </ItemGroup>
-
 </Project>

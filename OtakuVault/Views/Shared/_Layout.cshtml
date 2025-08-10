@@ -23,7 +23,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="MediaLibrary" asp-action="Index">Media</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MediaLibrary" asp-action="Index">Media Library</a>
                         </li>
                         @inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
                         @{
@@ -41,12 +41,6 @@
                         }
                         @if (Context.Session.GetString("Role") == "Admin")
                         {
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="MediaItems" asp-action="Index">MediaDatabase</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Index">UserDatabase</a>
-                            </li>
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Admin" asp-action="Dashboard">Dashboard</a>
                             </li>

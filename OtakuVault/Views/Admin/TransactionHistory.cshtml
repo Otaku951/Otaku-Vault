@@ -1,0 +1,26 @@
+﻿@model IEnumerable<OtakuVault.Models.Transaction>
+
+<h2>Transaction History</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>User</th>
+            <th>Coins Added</th>
+            <th>Amount</th>
+            <th>Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var transaction in Model)
+        {
+            <tr>
+                <td>@transaction.UserId</td>
+                <td>@transaction.CoinsAdded</td>
+                <td>@transaction.Amount</td>
+                <td>@transaction.Date</td>
+            </tr>
+        }
+    </tbody>
+</table>
+<a href="@Url.Action("Dashboard", "Admin")" class="btn btn-secondary">Back to Users</a>

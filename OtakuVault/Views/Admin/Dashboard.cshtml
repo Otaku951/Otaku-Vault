@@ -1,61 +1,263 @@
 ﻿@{
     ViewData["Title"] = "Admin Dashboard";
-    var users = ViewBag.Users as List<OtakuVault.Models.UserAccount>;
-    var media = ViewBag.MediaItems as List<OtakuVault.Models.MediaItem>;
 }
 
 <h2>Admin Dashboard</h2>
 
-<h3>Users</h3>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Role</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var user in users)
-        {
-            <tr>
-                <td>@user.Id</td>
-                <td>@user.Username</td>
-                <td>@user.Role</td>
-                <td>
-                    <a asp-controller="Account" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-sm btn-primary">Edit</a>
-                    <a asp-controller="Account" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-sm btn-danger">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<!-- Quick Stats Row -->
+<div class="row mb-4">
+    <div class="col-md-2">
+        <div class="card bg-primary text-white text-center p-3">
+            <h4>Users</h4>
+            <h2>@ViewBag.TotalUsers</h2>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-success text-white text-center p-3">
+            <h4>Media</h4>
+            <h2>@ViewBag.TotalMedia</h2>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-info text-white text-center p-3">
+            <h4>Entries</h4>
+            <h2>@ViewBag.TotalEntries</h2>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-warning text-dark text-center p-3">
+            <h4>Coin Packages</h4>
+            <h2>@ViewBag.TotalCoinPackages</h2>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-secondary text-white text-center p-3">
+            <h4>Transactions</h4>
+            <h2>@ViewBag.TotalTransactions</h2>
+        </div>
+    </div>
+    <div class="col-md-2">
+        <div class="card bg-danger text-white text-center p-3">
+            <h4>Unlocks</h4>
+            <h2>@ViewBag.TotalUnlocks</h2>
+        </div>
+    </div>
+</div>
 
-<h3>Media Library</h3>
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>ID</th>
-            <th>Title</th>
-            <th>Type</th>
-            <th>Genre</th>
-            <th>Actions</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in media)
-        {
-            <tr>
-                <td>@item.Id</td>
-                <td>@item.Title</td>
-                <td>@item.Type</td>
-                <td>@item.Genre</td>
-                <td>
-                    <a asp-controller="MediaItems" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Edit</a>
-                    <a asp-controller="MediaItems" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+<hr />
+
+<!-- Bootstrap Tabs -->
+<ul class="nav nav-tabs" id="dashboardTabs" role="tablist">
+    <li class="nav-item" role="presentation">
+        <button class="nav-link active" id="users-tab" data-bs-toggle="tab" data-bs-target="#users" type="button" role="tab">Users</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="media-tab" data-bs-toggle="tab" data-bs-target="#media" type="button" role="tab">Media Library</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="entries-tab" data-bs-toggle="tab" data-bs-target="#entries" type="button" role="tab">Media Entries</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="coins-tab" data-bs-toggle="tab" data-bs-target="#coins" type="button" role="tab">Coin Packages</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="transactions-tab" data-bs-toggle="tab" data-bs-target="#transactions" type="button" role="tab">Transactions</button>
+    </li>
+    <li class="nav-item" role="presentation">
+        <button class="nav-link" id="unlocks-tab" data-bs-toggle="tab" data-bs-target="#unlocks" type="button" role="tab">Entry Unlocks</button>
+    </li>
+</ul>
+
+<div class="tab-content mt-3" id="dashboardTabsContent">
+
+    <!-- Users Tab -->
+    <div class="tab-pane fade show active" id="users" role="tabpanel">
+        <h3>Users</h3>
+        <a asp-controller="Account" asp-action="Create" class="btn btn-primary mb-2">Add User</a>
+        <a asp-controller="Account" asp-action="Index" class="btn btn-primary mb-2">Database</a>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Role</th>
+                    <th>Coins</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var user in ViewBag.Users)
+                {
+                    <tr>
+                        <td>@user.Id</td>
+                        <td>@user.Username</td>
+                        <td>@user.Role</td>
+                        <td>@user.OtakuVaultCoins</td>
+                        <td>
+                            <a asp-controller="Admin" asp-action="TransactionHistory" asp-route-id="@user.Id" class="btn btn-sm btn-primary">View Transaction</a>
+                            <a asp-controller="Account" asp-action="Edit" asp-route-id="@user.Id" class="btn btn-warning btn-sm">Edit</a>
+                            <a asp-controller="Account" asp-action="Delete" asp-route-id="@user.Id" class="btn btn-danger btn-sm">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Media Items Tab -->
+    <div class="tab-pane fade" id="media" role="tabpanel">
+        <h3>Media Library</h3>
+        <a asp-controller="MediaItems" asp-action="Create" class="btn btn-primary mb-2">Add Media</a>
+        <a asp-controller="MediaItems" asp-action="Index" class="btn btn-primary mb-2">Database</a>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Title</th>
+                    <th>Type</th>
+                    <th>Genre</th>
+                    <th>ImageData</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in ViewBag.MediaItems)
+                {
+                    <tr>
+                        <td>@item.Id</td>
+                        <td>@item.Title</td>
+                        <td>@item.Type</td>
+                        <td>@item.Genre</td>
+                        <td>@(item.ImageData != null ? "Yes" : "No")</td>
+                        <td>
+                            <a asp-controller="MediaLibrary" asp-action="MediaDetails" asp-route-id="@item.Id" class="btn btn-sm btn-primary">View</a>
+                            <a asp-controller="MediaItems" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-controller="MediaItems" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Media Entries Tab -->
+    <div class="tab-pane fade" id="entries" role="tabpanel">
+        <h3>Media Entries</h3>
+        <a asp-controller="MediaEntries" asp-action="Index" class="btn btn-primary mb-2">Database</a>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Media Item ID</th>
+                    <th>Title</th>
+                    <th>Release</th>
+                    <th>Locked</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var entry in ViewBag.MediaEntries)
+                {
+                    <tr>
+                        <td>@entry.Id</td>
+                        <td>@entry.MediaItemId</td>
+                        <td>@entry.Title</td>
+                        <td>@entry.Release</td>
+                        <td>@(entry.IsLocked ? "Yes" : "No")</td>
+                        <td>
+                            <a asp-controller="MediaEntries" asp-action="Edit" asp-route-id="@entry.Id" class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-controller="MediaEntries" asp-action="Delete" asp-route-id="@entry.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Coin Packages Tab -->
+    <div class="tab-pane fade" id="coins" role="tabpanel">
+        <h3>Coin Packages</h3>
+        <a asp-controller="CoinTransaction" asp-action="Create" class="btn btn-primary mb-2">Add Package</a>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Coins</th>
+                    <th>Price</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var package in ViewBag.CoinPackages)
+                {
+                    <tr>
+                        <td>@package.Id</td>
+                        <td>@package.Name</td>
+                        <td>@package.Coins</td>
+                        <td>@package.Price</td>
+                        <td>
+                            <a asp-controller="CoinTransaction" asp-action="Edit" asp-route-id="@package.Id" class="btn btn-sm btn-primary">Edit</a>
+                            <a asp-controller="CoinTransaction" asp-action="Delete" asp-route-id="@package.Id" class="btn btn-sm btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Transactions Tab -->
+    <div class="tab-pane fade" id="transactions" role="tabpanel">
+        <h3>Transactions</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Amount</th>
+                    <th>Coins Added</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tx in ViewBag.Transactions)
+                {
+                    <tr>
+                        <td>@tx.Id</td>
+                        <td>@tx.UserId</td>
+                        <td>@tx.Amount</td>
+                        <td>@tx.CoinsAdded</td>
+                        <td>@tx.Date.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Entry Unlocks Tab -->
+    <div class="tab-pane fade" id="unlocks" role="tabpanel">
+        <h3>Entry Unlocks</h3>
+        <table class="table table-bordered table-striped">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>User ID</th>
+                    <th>Entry ID</th>
+                    <th>Unlock Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var unlock in ViewBag.EntryUnlocks)
+                {
+                    <tr>
+                        <td>@unlock.Id</td>
+                        <td>@unlock.UserId</td>
+                        <td>@unlock.MediaEntryId</td>
+                        <td>@unlock.UnlockDate.ToShortDateString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>

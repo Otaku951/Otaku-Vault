@@ -22,7 +22,7 @@ else
                         <h5 class="card-title">@item.Media.Title</h5>
                         <p class="card-text">Type: @item.Media.Type</p>
                         <p class="card-text">Status: <strong>@item.Status</strong></p>
-                        <a href="@item.Media.ExternalLink" target="_blank" class="btn btn-primary">Watch/Read</a>
+                        <a asp-controller="MediaLibrary" asp-action="MediaDetails" asp-route-id="@item.MediaID" class="btn btn-warning btn-sm">Watch/Read</a>
                     </div>
                 </div>
             </div>

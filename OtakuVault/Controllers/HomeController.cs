@@ -23,8 +23,11 @@ namespace OtakuVault.Controllers
 
             // Pull latest media
             var latestMedia = _context.MediaItem
-                .Where(m => m.DateAdded.Date == today || m.DateAdded.Date == yesterday)
-                .OrderByDescending(m => m.DateAdded)
+                .Where(m =>m.DateAdded.Date >= yesterday && m.DateAdded.Date <= today // Media item itself added within the time range 
+                    || m.Entries.Any(e => e.ReleaseDate.Date >= yesterday && e.ReleaseDate.Date <= today)) // or any of its entries added within the time range
+                .OrderByDescending(m => new[] { m.DateAdded } // Order by media item date or entry date
+                    .Concat(m.Entries.Select(e => e.ReleaseDate))
+                    .Max()) 
                 .ToList();
 
             return View(latestMedia);

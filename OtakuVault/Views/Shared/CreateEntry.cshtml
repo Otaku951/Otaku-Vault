@@ -1,0 +1,76 @@
+﻿@model OtakuVault.Models.MediaEntry
+
+@{
+    ViewData["Title"] = "Create Entry";
+}
+
+<h1>Create Entry</h1>
+
+<hr />
+
+<!-- Display validation errors -->
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+<form asp-action="CreateEntry" method="post" enctype="multipart/form-data">
+    <input type="hidden" name="MediaItemId" value="@Model.MediaItemId" />
+
+    <div class="form-group">
+        <label asp-for="Title" class="control-label">Entry Title</label>
+        <input asp-for="Title" class="form-control" />
+        <span asp-validation-for="Title" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Release" class="control-label">Entry Release</label>
+        <input asp-for="Release" class="form-control" />
+        <span asp-validation-for="Release" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ReleaseDate" class="control-label">Release Date</label>
+        <input asp-for="ReleaseDate" class="form-control" type="date" />
+        <span asp-validation-for="ReleaseDate" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="ContentType" class="control-label">Content Type</label>
+        <select asp-for="ContentType" class="form-control">
+            <option value="Anime">Anime</option>
+            <option value="Manga">Manga</option>
+            <option value="Light Novel">Light Novel</option>
+        </select>
+        <span asp-validation-for="ContentType" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label for="contentFile">Upload Image</label>
+        <input type="file" name="contentFile" class="form-control" />
+    </div>
+
+    <div class="form-group">
+        <input type="submit" value="Save Entry" class="btn btn-primary" />
+    </div>
+</form>
+
+<a asp-controller="MediaLibrary" asp-action="MediaDetails" asp-route-id="@Model.MediaItemId" class="btn btn-secondary mt-4">Back to Media Item</a>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        <strong>ModelState is invalid.</strong>
+        <ul>
+            @foreach (var entry in ViewData.ModelState)
+            {
+                foreach (var error in entry.Value.Errors)
+                {
+                    <li><strong>@entry.Key</strong>: @error.ErrorMessage</li>
+                }
+            }
+        </ul>
+    </div>
+}

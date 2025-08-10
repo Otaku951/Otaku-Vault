@@ -34,6 +34,7 @@ namespace OtakuVault.Controllers
             }
 
             var mediaItem = await _context.MediaItem
+                .Include(m => m.Entries) // Include media entries in details view
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (mediaItem == null)
             {
@@ -49,7 +50,7 @@ namespace OtakuVault.Controllers
         {
             var userId = HttpContext.Session.GetInt32("UserID");
             if (userId == null) return RedirectToAction("Login", "Account");
-
+            // Validate selectedStatus
             var existing = await _context.UserMediaStatus
                 .FirstOrDefaultAsync(s => s.UserID == userId && s.MediaID == mediaId);
 
@@ -59,6 +60,7 @@ namespace OtakuVault.Controllers
             }
             else
             {
+                // Create a new status entry if it doesn't exist
                 _context.UserMediaStatus.Add(new UserMediaStatus
                 {
                     UserID = userId.Value,
@@ -69,26 +71,6 @@ namespace OtakuVault.Controllers
 
             await _context.SaveChangesAsync();
             return RedirectToAction("ReadingList", "User");
-        }
-
-        [HttpGet]
-        public IActionResult CreateEntry(int mediaItemId)
-        {
-            var entry = new MediaEntry { MediaItemId = mediaItemId };
-            return View(entry);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateEntry(MediaEntry entry)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.MediaEntry.Add(entry);
-                await _context.SaveChangesAsync();
-                return RedirectToAction("Details", "MediaItems", new { id = entry.MediaItemId });
-            }
-            return View(entry);
         }
 
         // GET: MediaItems/Create
@@ -117,7 +99,7 @@ namespace OtakuVault.Controllers
             {
                 _context.Add(mediaItem);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Dashboard", "Admin");
             }
 
             return View(mediaItem);
@@ -162,7 +144,7 @@ namespace OtakuVault.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Dashboard", "Admin");
         }
 
         // GET: MediaItems/Delete/5
@@ -195,7 +177,7 @@ namespace OtakuVault.Controllers
             }
 
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+            return RedirectToAction("Dashboard", "Admin");
         }
 
         private bool MediaItemExists(int id)
